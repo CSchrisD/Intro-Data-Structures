@@ -1,0 +1,31 @@
+#Christina Duran
+#1323418
+#CMPS 12B/M
+#6/24/14
+#make file for java files
+# A simple makefile with macros
+
+JAVASRC     = hello.java hello2.java
+SOURCES     = README makefile ${JAVASRC}
+MAINCLASS   = hello2
+CLASSES     = hello.class hello2.class
+JARFILE     = myHello
+JARCLASSES  = ${CLASSES}
+SUBMIT      = submit cmps012b-pt.u14 lab1
+
+all: ${JARFILE}
+
+${JARFILE}: ${CLASSES}
+        echo Main-class: ${MAINCLASS} >  Manifest
+        jar cvfm ${JARFILE} Manifest ${JARCLASSES}
+        rm Manifest
+        chmod +x ${JARFILE}
+
+${CLASSES}: ${JAVASRC}
+        javac -Xlint ${JAVASRC}
+
+clean:
+        rm ${CLASSES} ${JARFILE}
+
+submit: ${SOURCES}
+        ${SUBMIT} ${SOURCES}
